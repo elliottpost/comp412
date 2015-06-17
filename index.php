@@ -5,7 +5,7 @@ namespace elly;
 //include our lib
 require_once 'lib/classes/FileParser.php';
 require_once 'lib/classes/DataProcessor.php';
-require_once 'lib/classes/Neighborhood.php';
+require_once 'lib/classes/Community.php';
 
 //set up some constants
 define( "CSV_PATH", "data" . DIRECTORY_SEPARATOR );

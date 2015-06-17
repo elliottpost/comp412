@@ -22,14 +22,19 @@ final class DataProcessor {
 	private $_censusData;
 
 	/**
-	 * @var $_zipCodeNeighboorMap: the assoc array of zip codes -> neighborhoods
+	 * @var $_communityIdMap: the assoc array of community ID -> zip codes
 	 */
-	private $_zipCodeNeighboorMap;
+	private $_communityIdMap;
 
 	/**
-	 * @var $_neighborhoods: the aggregated data
+	 * @var $_zipCodeMap: the reverse assoc array of communityIdMap (eg: zip code->communityId )
 	 */
-	private $_neighborhoods = array();
+	private $_zipCodeMap;
+
+	/**
+	 * @var $_communities: the aggregated data
+	 */
+	private $_communities = array();
 
 	/**
 	 * constructs the inspection processor
@@ -38,60 +43,101 @@ final class DataProcessor {
 
 	/**
 	 * loads the data from the FileParser
+	 * @return void;
 	 * @throws \Exception if FileParser cannot parse CSV
 	 */ 
 	public function loadData() {
 		//get the data
 		$censusCsvRemote = "http://projects.ellytronic.media/homework/comp412/hw2/data/census-data.csv";
 		$foodCsvRemote = "http://projects.ellytronic.media/homework/comp412/hw2/data/food-inspections.csv";
-		$neighborhoodsRemote = "http://projects.ellytronic.media/homework/comp412/hw2/data/neighborhoods-zips.csv";
+		$communityIdToZipRemote = "http://projects.ellytronic.media/homework/comp412/hw2/data/census-community-id-to-zip-code.csv";
 		$censusCsvLocal = CSV_PATH . "census-data.csv";
 		$foodCsvLocal = CSV_PATH . "food-inspections.csv";
-		$neighborhoodsLocal = CSV_PATH . "neighborhoods-zips.csv";
+		$communityIdToZipLocal = CSV_PATH . "census-community-id-to-zip-code.csv";
 
 		if( !LOCAL ):
 			$this->_censusData = FileParser::readCsvToAssocArray( $censusCsvRemote );
 			$this->_foodData = FileParser::readCsvToAssocArray( $foodCsvRemote );
-			$neighborhoodData = FileParser::readCsvToArray( $neighborhoodsRemote );
+			$communityIdData = FileParser::readCsvToArray( $communityIdToZipLocal );
 		else:
 			$this->_censusData = FileParser::readCsvToAssocArray( $censusCsvLocal );
 			$this->_foodData = FileParser::readCsvToAssocArray( $foodCsvLocal );
-			$neighborhoodData = FileParser::readCsvToArray( $neighborhoodsLocal );
+			$communityIdData = FileParser::readCsvToArray( $communityIdToZipLocal );
 		endif;
 
-		$this->_zipCodeNeighboorMap = FileParser::createZipCodeAssocArray( $neighborhoodData );
+		//get the maps for community ID -> zip and back
+		$this->_communityIdMap = FileParser::createZipCodeAssocArray( $communityIdToZipLocal );
+		//because of duplicates, we can't just use array_flip to get the other map, so we'll 
+		//create the map as we iterate through the ID map to generate the communities.
+		// $this->_zipCodeMap = array_flip( $this->_communityIdMap );
 
 		//set up our neighborhoods
-		foreach( $this->_zipCodeNeighboorMap as $zip => $name ) {
-			$this->_neighborhoods[ $zip ] = new Neighborhood;
-			$this->_neighborhoods[ $zip ]->setName( $name );
+		foreach( $this->_communityIdMap as $communityId => $zipCode ) {
+			//build a community!
+			$this->_communities[ $communityId ] = new Community( $communityId );
+			$this->_communities[ $communityId ]->addZipCode( $zipCode );
+
+			//build our map
+			if( array_key_exists( $zipCode, $this->_zipCodeMap ) )
+				$this->_zipCodeMap[ $zipCode ][] = $communityId;
+			else
+				$this->_zipCodeMap[ $zipCode ] = array( $communityId );
 		}
 
-		$this->_foodAggregated = array( 'totalPass' => 0, 'totalFail' => 0 );
+		$this->_foodAggregated = array( 
+				'totalPass' => 0, 
+				'totalFail' => 0,
+				'uniquePass' => 0,
+				'uniqueFail' => 0
+			);
 	}
 
 	/**
 	 * Iterates the food data and keeps aggregate totals for the entire dataset as well 
 	 * as per zip code
+	 * @return void;
 	 */
 	public function iterateFoodData() {
 		foreach( $this->_foodData as $record ) {
 			//ensure the zip code is within our data limits
-			if( !array_key_exists( $record['zip'], $this->_zipCodeNeighboorMap ) )
+			if( !array_key_exists( $record['zip'], $this->_zipCodeMap ) )
 				continue;
 
-			if( $record['results'] == "pass" ) {
-				$this->_foodAggregated['totalPass']++;
-				$this->_neighborhoods[ $record['zip'] ]->incrementPasses();
+			//now get the community IDs to update
+			$communityIds = $this->zipToCommunityIds( $record['zip'] );
 
-			} else {
-				$this->_foodAggregated['totalFail']++;
-				$this->_neighborhoods[ $record['zip'] ]->incrementFails();
+			//make sure that we have census data for this/these community
+			if( empty( $communityIds ) )
+				continue;
+
+			//iterate through each id and perform aggregate data
+			foreach( $communityIds as $id ) {
+				if( $record['results'] == "pass" ) {
+					$this->_foodAggregated['totalPass']++;
+					$this->_communities[ $id ]->incrementPasses();
+
+				} else {
+					$this->_foodAggregated['totalFail']++;
+					$this->_communities[ $id ]->incrementFails();
+				}
 			}
+
+			//record our unique totals as well
+			if( $record['results'] == "pass" )
+				$this->_foodAggregated['uniquePass']++;
+			else
+				$this->_foodAggregated['uniqueFail']++;
 		}
-		var_dump( $this->_neighborhoods );
+		var_dump( $this );
 	} //iterateFoodData
 
-
+	/**
+	 * Takes a zip code and returns an array of community IDs that match
+	 * @param int $zip
+	 * @return int[] $communityIds
+	 */
+	private function zipToCommunityIds( $zip ) {
+		return $this->_zipCodeMap[ $zip ];
+	} //zipToCommunityIds
 	
 } //DataProcessor

@@ -1,10 +1,10 @@
 <?php
 /**
- * Represents a neighborhood
+ * Represents a Community
  */
 namespace elly;
 
-final class Neighborhood {
+final class Community {
 
 	/**
 	 * @var $passes: aggregated food inspection passes
@@ -17,12 +17,12 @@ final class Neighborhood {
 	private $_fails = 0;
 
 	/**
-	 * @var $name: the neighborhood name
+	 * @var $name: the Community name
 	 */
 	private $_name;
 
 	/**
-	 * @var $householdsBelowPoverty: percentage of households below poverty in this neighborhood
+	 * @var $householdsBelowPoverty: percentage of households below poverty in this Community
 	 */
 	private $_householdsBelowPoverty;
 
@@ -32,9 +32,22 @@ final class Neighborhood {
 	private $_perCapitaIncome;
 
 	/**
+	 * @var $name: the Community ZIP codes
+	 */
+	private $_zipCodes;
+
+	/**
+	 * @var $_id: the community ID
+	 */
+	private $_id;
+
+	/**
 	 * constructs the inspection processor
 	 */ 
-	public function __construct( ) {} //constructor
+	public function __construct( $id ) {
+		$this->_id( $id );
+		$this->_zipCodes = array();
+	} //constructor
 
 
 	public function getFails( $name ) {
@@ -51,6 +64,10 @@ final class Neighborhood {
 
 	public function incrementPasses() {
 		$this->_passes++;
+	}
+
+	public function getId() {
+		return $this->_id;
 	}
 
 	public function getName() {
@@ -76,5 +93,13 @@ final class Neighborhood {
 	public function setPerCapitaIncome( $num ) {
 		$this->_perCapitaIncome = $num;
 	}
+
+	public function getZipCodes() {
+		return $this->_zipCodes;
+	}
+
+	public function addZipCode( $zip ) {
+		$this->_zipCodes[] = $zip;
+	}
 	
-} //Neighborhood
+} //Community

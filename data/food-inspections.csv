@@ -1,4 +1,4 @@
-zip,inspection_date,results,latitude,longitude
+zip_code,inspection_date,results,latitude,longitude
 60827,11/17/2014,fail,41.65312508,-87.60182419
 60827,11/14/2014,fail,41.65743243,-87.60649623
 60827,11/6/2014,fail,41.65376037,-87.61434156
