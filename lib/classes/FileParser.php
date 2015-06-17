@@ -70,7 +70,8 @@ final class FileParser {
 
 	/**
 	 * Generates an associative array from an array of neighboor hoods => zip codes
-	 * zip codes that match multiple neighborhoods use the last matched, (duplicates overrwrite prev values)
+	 * zip codes that match multiple neighborhoods will check which neighborhood does not yet exist in array
+	 * new values will be favored. On both duplicates, stable algorithm in place
 	 * @param $rows: the array from readCsvToArray
 	 * @return int[] $zipCodes => (String) Neighborhood
 	 */
@@ -80,13 +81,16 @@ final class FileParser {
 			//row[0] = neighborhood
 			//row[1] = zips
 			// split the string of zips into an array
-			// var_dump( $row );
 			$zipsArr = explode( ",", $row[1] );
 			foreach( $zipsArr as $zip ) {
+				//force the zip as a string to ensure we have at least 5 chars
 				$zip = (String) trim( $zip );
 				if( strlen( $zip ) != 5 )
 					continue;
-				$arr[ (int) $zip ] = $row[0];
+
+				//check for dependencies
+				if( !in_array( $row[0], $arr ) )
+					$arr[ (int) $zip ] = $row[0];
 			} //foreach $zips as $zip
 		} //foreach $arr as $row
 		return $arr;
