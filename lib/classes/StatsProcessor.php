@@ -13,8 +13,6 @@ final class StatsProcessor {
 	 */
 	private function __construct() {}
 
-	public static function calculateStdDev()
-
     /**
      * This user-land implementation follows the implementation quite strictly;
      * it does not attempt to improve the code or algorithm in any way. It will
@@ -27,7 +25,10 @@ final class StatsProcessor {
      * @link http://php.net/manual/en/function.stats-standard-deviation.php
      * @author levim at php dot net 
      */
-	private static function stats_standard_deviation(array $a, $sample = false) {
+	public static function calculateStdDev( $array, $sample = false ) {
+		if( function_exists('stats_standard_deviation' ) ) 
+			return stats_standard_deviation( $array, $sample );
+
         $n = count($a);
         if ($n === 0) {
             trigger_error("The array has zero elements", E_USER_WARNING);
@@ -47,6 +48,6 @@ final class StatsProcessor {
            --$n;
         }
         return sqrt($carry / $n);
-    } //stats_standard_deviation
+	} //calculateStdDev
 
 } //StatsProcessor

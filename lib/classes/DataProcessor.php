@@ -34,7 +34,7 @@ final class DataProcessor {
 	/**
 	 * @var $_communities: the aggregated data
 	 */
-	public $_communities = array();
+	private $_communities = array();
 
 	/**
 	 * constructs the inspection processor
@@ -189,7 +189,7 @@ final class DataProcessor {
 	 * returns the number of unique fails (fails only counted once)
 	 */
 	public function getUniqueFails() {
-		return $this->_foodAggregated[ 'uniqueFails' ];
+		return $this->_foodAggregated[ 'uniqueFail' ];
 	} //getUniqueFails
 	
 	/** 
