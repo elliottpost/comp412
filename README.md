@@ -9,10 +9,11 @@ LUC Summer '15 COMP 412 - Open Source
 
 
 ## Original Data Sources
-Food Inspections <https://data.cityofchicago.org/Health-Human-Services/Food-Inspections/4ijn-s7e5>  
-Census Data <https://data.cityofchicago.org/Health-Human-Services/Census-Data-Selected-socioeconomic-indicators-in-C/kn9c-c2s2> 
-Chicago Neighborhoods by Zip <http://www.dreamtown.com/maps/chicago-zipcode-map.html>   
-
+* Census Community ID to Postal Zip Code: <http://robparal.blogspot.com/2013/07/chicago-community-area-and-zip-code.html>  
+* Food Inspections <https://data.cityofchicago.org/Health-Human-Services/Food-Inspections/4ijn-s7e5>  
+* Census Data <https://data.cityofchicago.org/Health-Human-Services/Census-Data-Selected-socioeconomic-indicators-in-C/kn9c-c2s2>  
+* (Deprecated) Chicago Neighborhoods by Zip <http://www.dreamtown.com/maps/chicago-zipcode-map.html>  
+* (Deprecated) Google Maps with Chicago Neighborhood KML <https://www.google.com/maps/d/u/0/viewer?mid=zYiwUHdW8Wmg.kNxj-e0srss0>  
 
 ## Notes about data cleaning
 ### Food Inspections

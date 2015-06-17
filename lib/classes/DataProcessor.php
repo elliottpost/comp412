@@ -89,7 +89,7 @@ final class DataProcessor {
 				$this->_neighborhoods[ $record['zip'] ]->incrementFails();
 			}
 		}
-
+		var_dump( $this->_neighborhoods );
 	} //iterateFoodData
 
 
