@@ -49,5 +49,7 @@ try {
 	<li>CSV's downloaded and parsed.</li>
 </ul>
 
+<pre id="details">
+</pre>
 
 <div id="map-canvas" style="min-height: 300px"></div>
