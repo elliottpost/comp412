@@ -49,7 +49,7 @@ final class Community {
 	} //constructor
 
 
-	public function getFails( $name ) {
+	public function getFails() {
 		return $this->_fails;
 	}
 
@@ -57,7 +57,7 @@ final class Community {
 		$this->_fails++;
 	}
 
-	public function getPasses( $name ) {
+	public function getPasses() {
 		return $this->_passes;
 	}
 

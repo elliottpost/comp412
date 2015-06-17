@@ -26,7 +26,6 @@ try {
 	$uniquePassPercentage = round( ( $uniquePasses / $uniqueInspections ) * 100, 2 );
 	$uniqueFailPercentage = round( ( $uniqueFails / $uniqueInspections ) * 100, 2 );
 
-
 	//get the communities 
 	$communities = $dp->getCommunities();
 	
@@ -46,11 +45,56 @@ try {
 	However, the percentages between total and unique should be very close suggesting that although our data has flaws, it should not affect the percentages of the results, only the aggregate values.</p>
 
 	<h3>Community Breakdowns</h3>
-	<?php
-	foreach( $communities as $community ):
+	<table class="table table-hover table-bordered table-condensed table-data-table">
+        <thead>
+            <tr>
+                <th width="5%!important;">ID</th>
+                <th width="16%!important;">Name</th>
+                <th width="16%!important;">Num. of Passes</th>
+                <th width="16%!important;">Num. of Fails</th>
+                <th width="15%!important;">Households Below Poverty</th>
+                <th width="16%!important;">Per Capita Income</th>
+                <th width="16%!important;">Zip Codes</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Num. of Passes</th>
+                <th>Num. of Fails</th>
+                <th>Households Below Poverty</th>
+                <th>Per Capita Income</th>
+                <th>Zip Codes</th>
+            </tr>
+        </tfoot>
+        <tbody>
+            <?php
+			foreach( $communities as $community ):
+				//calculate pass & fail totals/percentages
+				$p = $community->getPasses();
+				$f = $community->getFails();
+				$i =  $p + $f;
+				$pp = round( ( $p / $i ) * 100, 2 );
+				$pf = round( ( $f / $i ) * 100, 2 );
 
-	endforeach; //communities as community
-	?>
+				?>
+				<tr>
+					<td><?=$community->getId();?></td>
+					<td><?=$community->getName();?></td>
+					<td><?=$p;?> (<?=$pp?>%)</td>
+					<td><?=$f;?> (<?=$pf?>%)</td>
+					<td><?=number_format( $community->getHouseholdsBelowPoverty() );?></td>
+					<td>$<?=number_format( $community->getPerCapitaIncome() );?></td>
+					<td><?=implode( ", ", $community->getZipCodes() );?></td>
+				</tr>
+				<?php
+			endforeach; //communities as community
+			?>
+        </tbody>
+    </table>
+    <span class="pull-right"><small>*Times listed are UTC</small></span>
+
 
 	<?php
 
