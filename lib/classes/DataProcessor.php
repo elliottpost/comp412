@@ -164,6 +164,40 @@ final class DataProcessor {
 		} //censusData as $record
 	} //iterateCensusData
 
+	/**
+	 * returns the number of total passes counted
+	 */
+	public function getTotalPasses() {
+		return $this->_foodAggregated[ 'totalPass' ];
+	} //getTotalPasses
 
+	/**
+	 * returns the number of total fails counted
+	 */
+	public function getTotalFails() {
+		return $this->_foodAggregated[ 'totalFail' ];
+	} //getTotalFails
+
+	/**
+	 * returns the number of unique passes (passes only counted once)
+	 */
+	public function getUniquePasses() {
+		return $this->_foodAggregated[ 'uniquePass' ];
+	} //getUniquePasses
+
+	/**
+	 * returns the number of unique fails (fails only counted once)
+	 */
+	public function getUniqueFails() {
+		return $this->_foodAggregated[ 'uniqueFails' ];
+	} //getUniqueFails
 	
+	/** 
+	 * Returns the array of Community objects with data populated
+	 * @return Community[] Communities
+	 */
+	public function getCommunities() {
+		return $this->_communities;
+	} //getCommunities
+
 } //DataProcessor
