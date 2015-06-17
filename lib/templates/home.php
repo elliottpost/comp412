@@ -16,6 +16,7 @@ try {
 
 <p><strong>Status:</strong></p>
 <ul id="status">
-	<li>Application loaded.</li>
-	<li>CSV's downloaded and parsed.</li>
+	<li>CSV's parsing&hellip;done</li>
+	<li>CSV's downloading&hellip;done</li>
+	<li>Application loading&hellip;done</li>
 </ul>
