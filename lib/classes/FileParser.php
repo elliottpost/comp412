@@ -12,11 +12,12 @@ final class FileParser {
 	} //__construct
 
 	/**
-	 * Reads a CSV file to an array
+	 * Reads a CSV file to an associative array
+	 * header row is used as key for values
 	 * @param String $file: the full path to the file (can be remote)
 	 * @throws \Exception if cannot open CSV
 	 */
-	public static function readCsvToArray( $file ) {
+	public static function readCsvToAssocArray( $file ) {
 		if( ( $handle = fopen( $file, 'r' ) ) === FALSE )
 			throw new \Exception( "Could not open file {$file}." );
 
@@ -44,6 +45,51 @@ final class FileParser {
 
 		return $arr;
 
+	} //readCsvToAssocArray
+
+	/**
+	 * Reads a CSV file to an array
+	 * includes header row
+	 * @param String $file: the full path to the file (can be remote)
+	 * @throws \Exception if cannot open CSV
+	 */
+	public static function readCsvToArray( $file ) {
+		if( ( $handle = fopen( $file, 'r' ) ) === FALSE )
+			throw new \Exception( "Could not open file {$file}." );
+
+		$arr = array();
+		while( ( $data = fgetcsv( $handle ) ) !== FALSE ):
+			$arr[] = $data;
+		endwhile;
+		
+		fclose( $handle );
+
+		return $arr;
+
 	} //readCsvToArray
+
+	/**
+	 * Generates an associative array from an array of neighboor hoods => zip codes
+	 * zip codes that match multiple neighborhoods use the last matched, (duplicates overrwrite prev values)
+	 * @param $rows: the array from readCsvToArray
+	 * @return int[] $zipCodes => (String) Neighborhood
+	 */
+	public static function createZipCodeAssocArray( $rows ) {
+		$arr = array();
+		foreach( $rows as $row ) {
+			//row[0] = neighborhood
+			//row[1] = zips
+			// split the string of zips into an array
+			// var_dump( $row );
+			$zipsArr = explode( ",", $row[1] );
+			foreach( $zipsArr as $zip ) {
+				$zip = (String) trim( $zip );
+				if( strlen( $zip ) != 5 )
+					continue;
+				$arr[ (int) $zip ] = $row[0];
+			} //foreach $zips as $zip
+		} //foreach $arr as $row
+		return $arr;
+	} //createZipCodeAssocArray
 
 } //FileParser

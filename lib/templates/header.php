@@ -19,9 +19,6 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-     <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA36M9b1b5_OXubSvPe6zrCLNsSGsKYrB8">
-    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   </head>
 

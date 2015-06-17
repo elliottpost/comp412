@@ -5,8 +5,10 @@ namespace elly;
 //get the data
 $censusCsvRemote = "http://projects.ellytronic.media/homework/comp412/hw2/data/census-data.csv";
 $foodCsvRemote = "http://projects.ellytronic.media/homework/comp412/hw2/data/food-inspections.csv";
+$neighborhoodsRemote = "http://projects.ellytronic.media/homework/comp412/hw2/data/neighborhoods-zips.csv";
 $censusCsvLocal = CSV_PATH . "census-data.csv";
 $foodCsvLocal = CSV_PATH . "food-inspections.csv";
+$neighborhoodsLocal = CSV_PATH . "neighborhoods-zips.csv";
 
 //basic formatting if xdebug not installed
 /*if( !function_exists( 'xdebug_get_code_coverage' ) )
@@ -15,11 +17,13 @@ $foodCsvLocal = CSV_PATH . "food-inspections.csv";
 try {
 
 	if( !LOCAL ):
-		$censusData = FileParser::readCsvToArray( $censusCsvRemote );
-		$foodData = FileParser::readCsvToArray( $foodCsvRemote );
+		$censusData = FileParser::readCsvToAssocArray( $censusCsvRemote );
+		$foodData = FileParser::readCsvToAssocArray( $foodCsvRemote );
+		$neighborhoodData = FileParser::readCsvToArray( $neighborhoodsRemote );
 	else:
-		$censusData = FileParser::readCsvToArray( $censusCsvLocal );
-		$foodData = FileParser::readCsvToArray( $foodCsvLocal );
+		$censusData = FileParser::readCsvToAssocArray( $censusCsvLocal );
+		$foodData = FileParser::readCsvToAssocArray( $foodCsvLocal );
+		$neighborhoodData = FileParser::readCsvToArray( $neighborhoodsLocal );
 	endif;
 
 } catch( \Exception $e ) {
@@ -34,13 +38,10 @@ try {
 //close formatting
 /*if( !function_exists( 'xdebug_get_code_coverage' ) )
 	echo "</pre>"; */
-
+var_dump( $neighborhoodData );
+var_dump( FileParser::createZipCodeAssocArray( $neighborhoodData ) );
 ?>
 
-<script>
-	var censusDataJSON = <?=json_encode( $censusData, JSON_FORCE_OBJECT | JSON_NUMERIC_CHECK );?>;
-	var foodDataJSON = <?=json_encode( $foodData, JSON_FORCE_OBJECT | JSON_NUMERIC_CHECK );?>;
-</script>
 
 <script src="lib/js/dataProcessor.js"></script>
 
@@ -48,8 +49,3 @@ try {
 <ul id="status">
 	<li>CSV's downloaded and parsed.</li>
 </ul>
-
-<pre id="details">
-</pre>
-
-<div id="map-canvas" style="min-height: 300px"></div>
