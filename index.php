@@ -5,31 +5,12 @@ namespace elly;
 //include our lib
 require_once 'lib/classes/FileParser.php';
 
-//set up helper vars
+//set up some constants
 define( "CSV_PATH", "data" . DIRECTORY_SEPARATOR );
 
-//get the data
-$censusCsvRemote = "http://projects.ellytronic.media/homework/comp412/hw2/data/census-data.csv";
-$foodCsvRemote = "http://projects.ellytronic.media/homework/comp412/hw2/data/food-inspections.csv";
-$censusCsvLocal = CSV_PATH . "census-data.csv";
-$foodCsvLocal = CSV_PATH . "food-inspections.csv";
+require_once 'lib/templates/header.php';
+require_once 'lib/templates/home.php';
+require_once 'lib/templates/footer.php';
 
-//basic formatting if xdebug not installed
-if( !function_exists( 'xdebug_get_code_coverage' ) )
-	echo "<pre>";
 
-try {
-
-	$censusData = FileParser::readCsvToArray( $censusCsvRemote );
-	$foodData = FileParser::readCsvToArray( $foodCsvRemote );
-
-	var_dump( $censusData, $foodData );
-
-} catch( \Exception $e ) {
-
-	echo "<p style='color: #ff0000; font-weight: 700;'>An error occurred during processing: " . $e->getMessage() . "</p>";
-}
-
-//close formatting
-if( !function_exists( 'xdebug_get_code_coverage' ) )
-	echo "</pre>"; 
+//don't close the tag, it eliminates erroneous whitespace
