@@ -38,6 +38,7 @@ Results standardized:
 * The census data stops at 2010, but records for food inspections are from 2013-2015. We assume the income data can be extrapolated from census data and is unchanged in any significant manor in 5 years.   
 * Chicago neighborhood boundaries seem to vary by map. Some maps do not have all the neighboorhoods, some maps (such as the one we are using) have more neighborhoods than the Chicago census data records.  
 * Chicago neighborhoods now based on zip code, rather than map (see explanation under section "Changes from original plan").  
+* Suburbs such as Cicero are not included in census data and are ignored in food inspection results.  
 
 
 ## Changes from original plan

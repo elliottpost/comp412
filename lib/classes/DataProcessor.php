@@ -12,6 +12,11 @@ final class DataProcessor {
 	private $_foodData;
 
 	/**
+	 * @var $_foodAggregated: aggregated food data
+	 */
+	private $_foodAggregated;
+
+	/**
 	 * @var $_censusData: the assoc array of census inspections parsed and cleaned already from CSV
 	 */
 	private $_censusData;
@@ -58,9 +63,11 @@ final class DataProcessor {
 
 		//set up our neighborhoods
 		foreach( $this->_zipCodeNeighboorMap as $zip => $name ) {
-			$this->_scores[ $zip ] = new Neighborhood;
-			$this->_scores[ $zip ]->setName( $name );
+			$this->_neighborhoods[ $zip ] = new Neighborhood;
+			$this->_neighborhoods[ $zip ]->setName( $name );
 		}
+
+		$this->_foodAggregated = array( 'totalPass' => 0, 'totalFail' => 0 );
 	}
 
 	/**
@@ -69,12 +76,22 @@ final class DataProcessor {
 	 */
 	public function iterateFoodData() {
 		foreach( $this->_foodData as $record ) {
-			if( $record['results'] == "pass" )
+			//ensure the zip code is within our data limits
+			if( !array_key_exists( $record['zip'], $this->_zipCodeNeighboorMap ) )
+				continue;
+
+			if( $record['results'] == "pass" ) {
 				$this->_foodAggregated['totalPass']++;
-			else
+				$this->_neighborhoods[ $record['zip'] ]->incrementPasses();
+
+			} else {
 				$this->_foodAggregated['totalFail']++;
-			break;
+				$this->_neighborhoods[ $record['zip'] ]->incrementFails();
+			}
 		}
+
 	} //iterateFoodData
+
+
 	
 } //DataProcessor
