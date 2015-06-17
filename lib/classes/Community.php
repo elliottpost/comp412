@@ -32,7 +32,7 @@ final class Community {
 	private $_perCapitaIncome;
 
 	/**
-	 * @var $name: the Community ZIP codes
+	 * @var $_zipCodes: the Community ZIP codes
 	 */
 	private $_zipCodes;
 
@@ -45,8 +45,7 @@ final class Community {
 	 * constructs the inspection processor
 	 */ 
 	public function __construct( $id ) {
-		$this->_id( $id );
-		$this->_zipCodes = array();
+		$this->_id = $id;
 	} //constructor
 
 
@@ -98,8 +97,8 @@ final class Community {
 		return $this->_zipCodes;
 	}
 
-	public function addZipCode( $zip ) {
-		$this->_zipCodes[] = $zip;
+	public function setZipCodes( $zipArray ) {
+		$this->_zipCodes = $zipArray;
 	}
 	
 } //Community

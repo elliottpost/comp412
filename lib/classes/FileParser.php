@@ -69,31 +69,32 @@ final class FileParser {
 	} //readCsvToArray
 
 	/**
-	 * Generates an associative array from an array of neighboor hoods => zip codes
-	 * zip codes that match multiple neighborhoods will check which neighborhood does not yet exist in array
-	 * new values will be favored. On both duplicates, stable algorithm in place
+	 * Generates an associative array from an array of community ID => array( zip codes )
 	 * @param $rows: the array from readCsvToArray
-	 * @return int[] $zipCodes => (String) Neighborhood
+	 * @return int[] $communityId => int[] $zipCodes
 	 */
-	public static function createZipCodeAssocArray( $rows ) {
-		$arr = array();
-		foreach( $rows as $row ) {
-			//row[0] = neighborhood
-			//row[1] = zips
-			// split the string of zips into an array
-			$zipsArr = explode( ",", $row[1] );
-			foreach( $zipsArr as $zip ) {
-				//force the zip as a string to ensure we have at least 5 chars
-				$zip = (String) trim( $zip );
-				if( strlen( $zip ) != 5 )
-					continue;
+	public static function createCommunityIdMap( $rows ) {
+		$map = array();
 
-				//check for dependencies
-				if( !in_array( $row[0], $arr ) )
-					$arr[ (int) $zip ] = $row[0];
-			} //foreach $zips as $zip
-		} //foreach $arr as $row
-		return $arr;
+		foreach( $rows as $row ) {
+			//skip column headers
+			if( !is_numeric( $row[0] ) )
+				continue;
+			
+			//row[0] = zip code
+			//row[1] = community ID
+			$zip = (int) trim( $row[0] );
+			$communityId = (int) trim( $row[1] );
+
+			//build our map by adding an array of zip codes that match this ID
+			if( !array_key_exists( $communityId, $map ) )
+				$map[ $communityId ] = array( $zip );
+			else
+				$map[ $communityId ][] = $zip;
+			
+		} //foreach $rows as $row
+		return $map;
+		
 	} //createZipCodeAssocArray
 
 } //FileParser

@@ -34,7 +34,7 @@ final class DataProcessor {
 	/**
 	 * @var $_communities: the aggregated data
 	 */
-	private $_communities = array();
+	public $_communities = array();
 
 	/**
 	 * constructs the inspection processor
@@ -50,10 +50,10 @@ final class DataProcessor {
 		//get the data
 		$censusCsvRemote = "http://projects.ellytronic.media/homework/comp412/hw2/data/census-data.csv";
 		$foodCsvRemote = "http://projects.ellytronic.media/homework/comp412/hw2/data/food-inspections.csv";
-		$communityIdToZipRemote = "http://projects.ellytronic.media/homework/comp412/hw2/data/census-community-id-to-zip-code.csv";
+		$communityIdToZipRemote = "http://projects.ellytronic.media/homework/comp412/hw2/data/zip-code-to-community-id.csv";
 		$censusCsvLocal = CSV_PATH . "census-data.csv";
 		$foodCsvLocal = CSV_PATH . "food-inspections.csv";
-		$communityIdToZipLocal = CSV_PATH . "census-community-id-to-zip-code.csv";
+		$communityIdToZipLocal = CSV_PATH . "zip-code-to-community-id.csv";
 
 		if( !LOCAL ):
 			$this->_censusData = FileParser::readCsvToAssocArray( $censusCsvRemote );
@@ -66,22 +66,28 @@ final class DataProcessor {
 		endif;
 
 		//get the maps for community ID -> zip and back
-		$this->_communityIdMap = FileParser::createZipCodeAssocArray( $communityIdToZipLocal );
+		$this->_communityIdMap = FileParser::createCommunityIdMap( $communityIdData );
 		//because of duplicates, we can't just use array_flip to get the other map, so we'll 
 		//create the map as we iterate through the ID map to generate the communities.
 		// $this->_zipCodeMap = array_flip( $this->_communityIdMap );
+		$this->_zipCodeMap = array();
 
 		//set up our neighborhoods
-		foreach( $this->_communityIdMap as $communityId => $zipCode ) {
-			//build a community!
-			$this->_communities[ $communityId ] = new Community( $communityId );
-			$this->_communities[ $communityId ]->addZipCode( $zipCode );
+		foreach( $this->_communityIdMap as $communityId => $zipCodeArray ) {
+			//build a community! (if you haven't already!)
+			if( !array_key_exists( $communityId, $this->_communities ) )
+				$this->_communities[ $communityId ] = new Community( $communityId );
 
-			//build our map
-			if( array_key_exists( $zipCode, $this->_zipCodeMap ) )
-				$this->_zipCodeMap[ $zipCode ][] = $communityId;
-			else
-				$this->_zipCodeMap[ $zipCode ] = array( $communityId );
+			//add the zip code to the community
+			$this->_communities[ $communityId ]->setZipCodes( $zipCodeArray );
+
+			//build our zip code -> community ID map
+			foreach( $zipCodeArray as $zipCode) {
+				if( array_key_exists( $zipCode, $this->_zipCodeMap ) )
+					$this->_zipCodeMap[ $zipCode ][] = $communityId;
+				else
+					$this->_zipCodeMap[ $zipCode ] = array( $communityId );
+			} //foreach $zipCodeArray as $zipCode
 		}
 
 		$this->_foodAggregated = array( 
@@ -93,18 +99,37 @@ final class DataProcessor {
 	}
 
 	/**
+	 * Takes a zip code and returns an array of community IDs that match
+	 * @param int $zip
+	 * @return int[] $communityIds
+	 */
+	private function zipToCommunityIds( $zip ) {
+		return $this->_zipCodeMap[ $zip ];
+	} //zipToCommunityIds
+
+	/**
+	 * Takes a community ID and returns an array of zip codes IDs that match
+	 * @param int $id
+	 * @return int[] $zipCodes
+	 */
+	private function communityIdToZips( $id ) {
+		return $this->_communityIdMap[ $zip ];
+	} //communityIdToZips
+
+	/**
 	 * Iterates the food data and keeps aggregate totals for the entire dataset as well 
 	 * as per zip code
 	 * @return void;
 	 */
 	public function iterateFoodData() {
+		
 		foreach( $this->_foodData as $record ) {
 			//ensure the zip code is within our data limits
-			if( !array_key_exists( $record['zip'], $this->_zipCodeMap ) )
+			if( !array_key_exists( $record['zip_code'], $this->_zipCodeMap ) )
 				continue;
 
 			//now get the community IDs to update
-			$communityIds = $this->zipToCommunityIds( $record['zip'] );
+			$communityIds = $this->zipToCommunityIds( $record['zip_code'] );
 
 			//make sure that we have census data for this/these community
 			if( empty( $communityIds ) )
@@ -128,16 +153,17 @@ final class DataProcessor {
 			else
 				$this->_foodAggregated['uniqueFail']++;
 		}
-		var_dump( $this );
+
 	} //iterateFoodData
 
-	/**
-	 * Takes a zip code and returns an array of community IDs that match
-	 * @param int $zip
-	 * @return int[] $communityIds
-	 */
-	private function zipToCommunityIds( $zip ) {
-		return $this->_zipCodeMap[ $zip ];
-	} //zipToCommunityIds
+	public function iterateCensusData() {
+		foreach( $this->_censusData as $record ) {
+			$this->_communities[ $record['community_id' ] ]->setName( $record['community_name'] );
+			$this->_communities[ $record['community_id' ] ]->setHouseholdsBelowPoverty( $record['percent_households_below_poverty'] );
+			$this->_communities[ $record['community_id' ] ]->setPerCapitaIncome( $record['per_capita_income'] );
+		} //censusData as $record
+	} //iterateCensusData
+
+
 	
 } //DataProcessor
