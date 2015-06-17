@@ -1,13 +1,19 @@
-# comp412
+# comp412 -hw 2
 LUC Summer '15 COMP 412 - Open Source
+
+## Objectives
+* Analyze food inspections over the last few years in comparison with Chicago neighborhood boundaries and income levels per neighborhood.  
+* Determine if there is a relationship between income & food inspection ratings.  
+* Determine best and worst neighborhoods for food inspections.  
 
 ## Original Data Sources
 Food Inspections <https://data.cityofchicago.org/Health-Human-Services/Food-Inspections/4ijn-s7e5>  
-Census Data <https://data.cityofchicago.org/Health-Human-Services/Census-Data-Selected-socioeconomic-indicators-in-C/kn9c-c2s2>  
+Census Data <https://data.cityofchicago.org/Health-Human-Services/Census-Data-Selected-socioeconomic-indicators-in-C/kn9c-c2s2> 
+Chicago Neighborhoods by Zip <http://www.dreamtown.com/maps/chicago-zipcode-map.html>   
 
 ## Notes about data cleaning
 ### Food Inspections
-Fields used: {Inspection Date, Results, Latitude, Longitude, Location }  
+Fields used: {Zip, Inspection Date, Results, Latitude, Longitude }  
 Records used: June 9, 2015 through Jan 1, 2013  
 Results standardized:  
 * Fail -> fail
@@ -18,7 +24,7 @@ Results standardized:
 * No Entry -> record ignored
 * Business Not Located -> record ignored
 
-Ignored records and records without a valid lat/long were removed from data set.
+Ignored records and records without a valid zip were removed from data set.
 
 ### Census Data
 Fields Used: {Community ID, COMMUNITY AREA NAME, PERCENT HOUSEHOLDS BELOW POVERTY, PER CAPITA INCOME }  
