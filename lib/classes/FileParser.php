@@ -21,8 +21,23 @@ final class FileParser {
 			throw new \Exception( "Could not open file {$file}." );
 
 		$arr = array();
+		$cols = array();
+		$i = -1;
 		while( ( $data = fgetcsv( $handle ) ) !== FALSE ):
-			$arr[] = $data;
+			//if first entry, just record the colum names
+			if( $i < 0 ) {
+				$cols = $data;
+				$i++;
+				continue;
+			} 
+
+			//foreach remaining entry, record colum names as key => value
+			$arr[ $i ] = array();
+			foreach( $cols as $k => $col ) {
+				$arr[ $i ][ $col ] = $data[ $k ];
+			}
+
+			$i++;
 		endwhile;
 		
 		fclose( $handle );
