@@ -103,7 +103,7 @@ final class DataProcessor {
 	 * @param int $zip
 	 * @return int[] $communityIds
 	 */
-	private function zipToCommunityIds( $zip ) {
+	public function zipToCommunityIds( $zip ) {
 		return $this->_zipCodeMap[ $zip ];
 	} //zipToCommunityIds
 
@@ -112,7 +112,7 @@ final class DataProcessor {
 	 * @param int $id
 	 * @return int[] $zipCodes
 	 */
-	private function communityIdToZips( $id ) {
+	public function communityIdToZips( $id ) {
 		return $this->_communityIdMap[ $zip ];
 	} //communityIdToZips
 
