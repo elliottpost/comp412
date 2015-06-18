@@ -48,8 +48,18 @@
     <div class="container">
 
       <div class="starter-template">
-        <h1>Project template</h1>
-        <p class="lead">Project description</p>
+        <h1>COMP412 - HW2 - Chicago Data Mining</h1>
+        <p class="lead">
+          This project attempts to use multiple, freely available data sources from the city of Chicago
+          in attempt to interpret any relationshp or causuality between zip code income per capita and food 
+          inspection pass percentages at dining facilities within that zip code. Specifically, this project
+          seeks to:
+          <ul>
+            <li> Analyze food inspections over the last few years in comparison with Chicago neighborhood boundaries and income levels per neighborhood.</li>
+            <li> Determine if there is a relationship between income &amp; food inspection ratings.</li>
+            <li> Determine best and worst neighborhoods for food inspections. </li>
+          </ul>
+        </p>
       </div>
 
     </div><!-- /.container -->
