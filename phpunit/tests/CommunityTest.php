@@ -17,7 +17,7 @@ class CommunityTest extends \PHPUnit_Framework_TestCase {
 		new ProjectAutoload;
 	}
 
-	protected function DP_zipCodes() {
+	public function DP_zipCodes() {
 		$data = array(
 					array( 
 						array(
@@ -95,7 +95,7 @@ class CommunityTest extends \PHPUnit_Framework_TestCase {
 		$this->obj->setHouseholdsBelowPoverty( true );
 		$this->assertEquals( 1, $this->obj->getHouseholdsBelowPoverty() );
 		$this->obj->setHouseholdsBelowPoverty( "true" );
-		$this->assertEquals( 1, $this->obj->getHouseholdsBelowPoverty() );
+		$this->assertEquals( 0, $this->obj->getHouseholdsBelowPoverty() );
 
 		$this->obj->setPerCapitaIncome( "12" );
 		$this->assertEquals( 12, $this->obj->getPerCapitaIncome() );
@@ -106,18 +106,18 @@ class CommunityTest extends \PHPUnit_Framework_TestCase {
 		$this->obj->setPerCapitaIncome( true );
 		$this->assertEquals( 1, $this->obj->getPerCapitaIncome() );
 		$this->obj->setPerCapitaIncome( "true" );
-		$this->assertEquals( 1, $this->obj->getPerCapitaIncome() );
+		$this->assertEquals( 0, $this->obj->getPerCapitaIncome() );
 	}
 
 	/**
-	 * @depends testZipCodesSetAndGet
+	 * @depends testCommunityConstruct
 	 * @dataProvider DP_zipCodes
 	 * ensures both pass & fail values can be incremented and get
 	 */
 	public function testZipCodesSetAndGet( $expected ) {
 		//rebuild the community
 		$this->testCommunityConstruct();
-		$this->obj->setZipCodes( array( 60626, "12345", "54455" ))
+		$this->obj->setZipCodes( array( 60626, "12345", "54455" ) );
 		$this->assertEquals( $expected, $this->obj->getZipCodes() );
 	}
 
