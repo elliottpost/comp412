@@ -33,7 +33,7 @@ class FileParserTest extends \PHPUnit_Framework_TestCase {
 	 * ensures CSV files are read into standard arrays correctly
 	 */
 	public function testReadCsvToArray() {
-		$array = FileParser::readCsvToAssocArray( PROJECT_PATH . "data/tests/FileParser.csv" );
+		$array = FileParser::readCsvToArray( PROJECT_PATH . "data/tests/FileParser.csv" );
 		$this->assertEquals( 4, count( $array ) );
 
 		$this->assertEquals( "name", $array[0][0] );
