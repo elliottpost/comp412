@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
 <style>
-
-body {
-  font: 10px sans-serif;
-}
 
 .axis path,
 .axis line {
@@ -21,8 +15,13 @@ body {
   display: none;
 }
 
+svg {
+  font-size:10px;
+  font-family: sans-serif;
+}
+
+
 </style>
-<body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
 <script>
 
@@ -48,13 +47,13 @@ var yAxis = d3.svg.axis()
     .orient("left")
     .tickFormat(d3.format(".2s"));
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#stacked-bar-container").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.csv("lib/js/splom.csv", function(error, data) {
+d3.csv("lib/js/results.csv", function(error, data) {
   if (error) throw error;
 
   color.domain(d3.keys(data[0]).filter(function(key) { return key !== "community_id"; }));

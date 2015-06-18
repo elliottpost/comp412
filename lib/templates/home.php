@@ -81,7 +81,12 @@ try {
 
             //build an array we'll use to create a csv later
             $csvArr = array(
-            		array( "community_id","per_capita_income","percentage_pass" )
+            		array( 
+            			"community_id",
+            			"Per Capita Income (In Thousands)",
+            			"Percentage Pass", 
+            			"Percentage Fail" 
+            		)
             	);
 			foreach( $communities as $id => $community ):
 				//calculate pass & fail totals/percentages
@@ -99,7 +104,12 @@ try {
 				$passes[ $id ] = $pp;
 
 				//update our csv Array
-				$csvArr[] = array( $id, $community->getPerCapitaIncome(), $pp );
+				$csvArr[] = array( 
+						$id, 
+						round( $community->getPerCapitaIncome() / 1000, 2 ), 
+						$pp,
+						$pf 
+					);
 				?>
 				<tr>
 					<td><?=$id;?></td>
@@ -202,15 +212,17 @@ try {
     	</tbody>
     </table>
 
-    <!--h3>Q-Q Plot of Per Capita Income &amp; Pass Percentage</h3-->
-	<?php
-	// require_once 'lib/templates/qq.php';
-	?>
+    <h3>Stacked Bar Chart (using d3.js)</h3>
+    <div id="stacked-bar-container" class="svg-container">
+		<?php
+		require_once 'lib/templates/stacked-bar.php';
+		?>
+	</div>
 
-    <!--h3>Scatterplot Matrix of Per Capita Income &amp; Pass Percentage</h3-->
-	<?php
-	// require_once 'lib/templates/splom.php';
-	?>
+	<h3>Conclusion</h3>
+	Graphically or manually inspecting data shows there is no correlation between Per Capita Income and 
+	pass rate of food inspections at local restaraunts. Although, again, the data had some issues due to 
+	map API limits, the overall result is accurate because the data was skewed proportionately.
 
 	<?php
 
