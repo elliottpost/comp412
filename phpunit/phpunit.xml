@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <phpunit bootstrap="./vendor/autoload.php">
     <testsuites>
-        <testsuite name="The project's test suite">
+        <testsuite name="COMP412-HW2 Tests">
             <directory>./tests</directory>
         </testsuite>
     </testsuites>

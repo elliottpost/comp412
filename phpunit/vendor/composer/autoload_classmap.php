@@ -6,9 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/File/Iterator.php',
-    'File_Iterator_Facade' => $vendorDir . '/phpunit/php-file-iterator/File/Iterator/Facade.php',
-    'File_Iterator_Factory' => $vendorDir . '/phpunit/php-file-iterator/File/Iterator/Factory.php',
+    'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
+    'File_Iterator_Facade' => $vendorDir . '/phpunit/php-file-iterator/src/Facade.php',
+    'File_Iterator_Factory' => $vendorDir . '/phpunit/php-file-iterator/src/Factory.php',
     'PHPUnit_Extensions_Database_AbstractTester' => $vendorDir . '/phpunit/dbunit/PHPUnit/Extensions/Database/AbstractTester.php',
     'PHPUnit_Extensions_Database_Constraint_DataSetIsEqual' => $vendorDir . '/phpunit/dbunit/PHPUnit/Extensions/Database/Constraint/DataSetIsEqual.php',
     'PHPUnit_Extensions_Database_Constraint_TableIsEqual' => $vendorDir . '/phpunit/dbunit/PHPUnit/Extensions/Database/Constraint/TableIsEqual.php',
@@ -35,6 +35,7 @@ return array(
     'PHPUnit_Extensions_Database_DataSet_AbstractTable' => $vendorDir . '/phpunit/dbunit/PHPUnit/Extensions/Database/DataSet/AbstractTable.php',
     'PHPUnit_Extensions_Database_DataSet_AbstractTableMetaData' => $vendorDir . '/phpunit/dbunit/PHPUnit/Extensions/Database/DataSet/AbstractTableMetaData.php',
     'PHPUnit_Extensions_Database_DataSet_AbstractXmlDataSet' => $vendorDir . '/phpunit/dbunit/PHPUnit/Extensions/Database/DataSet/AbstractXmlDataSet.php',
+    'PHPUnit_Extensions_Database_DataSet_ArrayDataSet' => $vendorDir . '/phpunit/dbunit/PHPUnit/Extensions/Database/DataSet/ArrayDataSet.php',
     'PHPUnit_Extensions_Database_DataSet_CompositeDataSet' => $vendorDir . '/phpunit/dbunit/PHPUnit/Extensions/Database/DataSet/CompositeDataSet.php',
     'PHPUnit_Extensions_Database_DataSet_CsvDataSet' => $vendorDir . '/phpunit/dbunit/PHPUnit/Extensions/Database/DataSet/CsvDataSet.php',
     'PHPUnit_Extensions_Database_DataSet_DataSetFilter' => $vendorDir . '/phpunit/dbunit/PHPUnit/Extensions/Database/DataSet/DataSetFilter.php',
@@ -335,7 +336,7 @@ return array(
     'PHP_CodeCoverage_Util' => $vendorDir . '/phpunit/php-code-coverage/PHP/CodeCoverage/Util.php',
     'PHP_CodeCoverage_Util_InvalidArgumentHelper' => $vendorDir . '/phpunit/php-code-coverage/PHP/CodeCoverage/Util/InvalidArgumentHelper.php',
     'PHP_CodeCoverage_Version' => $vendorDir . '/phpunit/php-code-coverage/PHP/CodeCoverage/Version.php',
-    'PHP_Timer' => $vendorDir . '/phpunit/php-timer/PHP/Timer.php',
+    'PHP_Timer' => $vendorDir . '/phpunit/php-timer/src/Timer.php',
     'PHP_Token' => $vendorDir . '/phpunit/php-token-stream/PHP/Token.php',
     'PHP_TokenWithScope' => $vendorDir . '/phpunit/php-token-stream/PHP/Token.php',
     'PHP_TokenWithScopeAndVisibility' => $vendorDir . '/phpunit/php-token-stream/PHP/Token.php',
