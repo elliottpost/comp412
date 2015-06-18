@@ -1,7 +1,7 @@
 <?php
 namespace elly;
 
-class FileParserTest extends \PHPUnit_Framework_TestCase {
+class StatsProcessorTest extends \PHPUnit_Framework_TestCase {
 	
 	/**
 	 * @var Commnuity $obj: our Community
