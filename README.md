@@ -51,6 +51,9 @@ The original plan was to use Google Maps & KML data to use reverse geocoding on 
 ## Running unit tests
 To run the unit tests on your system, you will need to be able to run PHP Unit. Visit <http://phpunit.de> for instructions on setup. Once configured, navigate to the project directory/phpunit and then run "./vendor/bin/phpunit". You may specificy additional flags for additional details. You will also need to edit the file phpunit/lib/elly/ProjectAutoload.php to adjust the PROJECT_ROOT. Lastly, you can view PHP Unit Testing summaries under "phpunit/results".
 
+## Find this project online
+You can view this complete project online at: <projects.ellytronic.media/homework/comp412/hw2/>
+
 
 ## Conclusion
 Graphically or manually inspecting data shows there is no correlation between Per Capita Income and 

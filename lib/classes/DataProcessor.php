@@ -113,7 +113,7 @@ final class DataProcessor {
 	 * @return int[] $zipCodes
 	 */
 	public function communityIdToZips( $id ) {
-		return $this->_communityIdMap[ $zip ];
+		return $this->_communityIdMap[ $id ];
 	} //communityIdToZips
 
 	/**
