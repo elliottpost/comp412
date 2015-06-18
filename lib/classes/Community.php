@@ -83,7 +83,7 @@ final class Community {
 	}
 
 	public function setHouseholdsBelowPoverty( $num ) {
-		$this->_householdsBelowPoverty = $num;
+		$this->_householdsBelowPoverty = (int) $num;
 	}
 
 	public function getPerCapitaIncome() {
@@ -91,7 +91,7 @@ final class Community {
 	}
 
 	public function setPerCapitaIncome( $num ) {
-		$this->_perCapitaIncome = $num;
+		$this->_perCapitaIncome = (int) $num;
 	}
 
 	public function getZipCodes() {

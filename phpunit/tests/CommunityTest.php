@@ -16,6 +16,17 @@ class CommunityTest extends \PHPUnit_Framework_TestCase {
 	protected function setUp() {
 		new ProjectAutoload;
 	}
+
+	protected function DP_zipCodes() {
+		$data = array(
+					array( 
+						array(
+							60626, 12345, 54455
+						)
+					)
+				);
+		return $data;
+	}
 	
 
 	/** 
@@ -51,6 +62,63 @@ class CommunityTest extends \PHPUnit_Framework_TestCase {
 		$this->testCommunityConstruct();
 		$this->obj->setName( "Loyola" );
 		$this->assertEquals( "Loyola", $this->obj->getName() );
+	}
+
+	/**
+	 * @depends testCommunityConstruct
+	 * ensures both pass & fail values can be incremented and get
+	 */
+	public function testIncrementsSetAndGet() {
+		//rebuild the community
+		$this->testCommunityConstruct();
+		for( $i = 0; $i < 5; $i++ )
+			$this->obj->incrementPasses();
+		for( $i = 0; $i < 3; $i++ )
+			$this->obj->incrementFails();
+		$this->assertEquals( 5, $this->obj->getPasses() );
+		$this->assertEquals( 3, $this->obj->getFails() );
+	}
+
+	/**
+	 * @depends testCommunityConstruct
+	 * ensures other instance vars can be set via method and get
+	 */
+	public function testCommunityDetailsSetAndGet() {
+		//rebuild the community
+		$this->testCommunityConstruct();
+		$this->obj->setHouseholdsBelowPoverty( "12" );
+		$this->assertEquals( 12, $this->obj->getHouseholdsBelowPoverty() );
+		$this->obj->setHouseholdsBelowPoverty( 7 );
+		$this->assertEquals( 7, $this->obj->getHouseholdsBelowPoverty() );
+		$this->obj->setHouseholdsBelowPoverty( null );
+		$this->assertEquals( 0, $this->obj->getHouseholdsBelowPoverty() );
+		$this->obj->setHouseholdsBelowPoverty( true );
+		$this->assertEquals( 1, $this->obj->getHouseholdsBelowPoverty() );
+		$this->obj->setHouseholdsBelowPoverty( "true" );
+		$this->assertEquals( 1, $this->obj->getHouseholdsBelowPoverty() );
+
+		$this->obj->setPerCapitaIncome( "12" );
+		$this->assertEquals( 12, $this->obj->getPerCapitaIncome() );
+		$this->obj->setPerCapitaIncome( 7 );
+		$this->assertEquals( 7, $this->obj->getPerCapitaIncome() );
+		$this->obj->setPerCapitaIncome( null );
+		$this->assertEquals( 0, $this->obj->getPerCapitaIncome() );
+		$this->obj->setPerCapitaIncome( true );
+		$this->assertEquals( 1, $this->obj->getPerCapitaIncome() );
+		$this->obj->setPerCapitaIncome( "true" );
+		$this->assertEquals( 1, $this->obj->getPerCapitaIncome() );
+	}
+
+	/**
+	 * @depends testZipCodesSetAndGet
+	 * @dataProvider DP_zipCodes
+	 * ensures both pass & fail values can be incremented and get
+	 */
+	public function testZipCodesSetAndGet( $expected ) {
+		//rebuild the community
+		$this->testCommunityConstruct();
+		$this->obj->setZipCodes( array( 60626, "12345", "54455" ))
+		$this->assertEquals( $expected, $this->obj->getZipCodes() );
 	}
 
 
