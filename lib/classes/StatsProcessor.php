@@ -25,9 +25,9 @@ final class StatsProcessor {
      * @link http://php.net/manual/en/function.stats-standard-deviation.php
      * @author levim at php dot net 
      */
-	public static function calculateStdDev( $array, $sample = false ) {
+	public static function calculateStdDev( $a, $sample = false ) {
 		if( function_exists('stats_standard_deviation' ) ) 
-			return stats_standard_deviation( $array, $sample );
+			return stats_standard_deviation( $a, $sample );
 
         $n = count($a);
         if ($n === 0) {
