@@ -78,7 +78,7 @@ class DataProcessorTest extends \PHPUnit_Framework_TestCase {
 		$this->obj->loadData();
 		$this->obj->iterateFoodData();
 		$this->obj->iterateCensusData();
-		$this->assert( is_array( $this->obj->getCommunities() ) );
+		$this->assertTrue( is_array( $this->obj->getCommunities() ) );
 	}
 
 	/**
@@ -89,10 +89,10 @@ class DataProcessorTest extends \PHPUnit_Framework_TestCase {
 	public function testGetPassesFails() {
 		$this->obj->loadData();
 		$this->obj->iterateFoodData();
-		$this->assert( is_int( $this->obj->getTotalPasses() ) );
-		$this->assert( is_int( $this->obj->getTotalFails() ) );
-		$this->assert( is_int( $this->obj->getUniquePasses() ) );
-		$this->assert( is_int( $this->obj->getUniqueFails() ) );
+		$this->assertTrue( is_int( $this->obj->getTotalPasses() ) );
+		$this->assertTrue( is_int( $this->obj->getTotalFails() ) );
+		$this->assertTrue( is_int( $this->obj->getUniquePasses() ) );
+		$this->assertTrue( is_int( $this->obj->getUniqueFails() ) );
 	}
 
 	protected function tearDown() {
