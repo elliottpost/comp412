@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <link type="text/css" rel="stylesheet" href="style.css"/>
     <style type="text/css">
 
@@ -71,9 +71,9 @@ circle {
       Edgar Anderson’s <i>Iris</i> data set<br>
       scatterplot matrix
     </h2>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-<script src="lib/js/d3.csv.js"></script>
-<script>
+    <script type="text/javascript" src="d3/d3.js"></script>
+    <script type="text/javascript" src="d3/d3.csv.js"></script>
+    <script type="text/javascript">
 
 d3.csv("lib/js/splom.csv", function(flowers) {
 
@@ -81,7 +81,7 @@ d3.csv("lib/js/splom.csv", function(flowers) {
   var size = 140,
       padding = 10,
       n = 4,
-      traits = ["pass_percentage", "per_capita_income"];
+      traits = ["per_capita_income", "pass_percentage"];
 
   // Position scales.
   var x = {}, y = {};
@@ -216,6 +216,7 @@ d3.csv("lib/js/splom.csv", function(flowers) {
     return c;
   }
 });
-</script>
-</body>
+
+    </script>
+  </body>
 </html>

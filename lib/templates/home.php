@@ -78,6 +78,11 @@ try {
             //set up some values so as we're iterating through our results we can
             //track best/worst for later
             $passes = array();
+
+            //build an array we'll use to create a csv later
+            $csvArr = array(
+            		array( "community_id","per_capita_income","percentage_pass" )
+            	);
 			foreach( $communities as $id => $community ):
 				//calculate pass & fail totals/percentages
 				$p = $community->getPasses();
@@ -92,6 +97,9 @@ try {
 
 				//keep track of best/worst
 				$passes[ $id ] = $pp;
+
+				//update our csv Array
+				$csvArr[] = array( $id, $community->getPerCapitaIncome(), $pp );
 				?>
 				<tr>
 					<td><?=$id;?></td>
@@ -107,6 +115,16 @@ try {
 			?>
         </tbody>
     </table>
+
+    <?php
+    //now that we have our CSV, write it for our analytics below
+	$fh = fopen( "lib/js/results.csv", "w" );
+	//make it utf-8
+	fprintf( $fh, "\xEF\xBB\xBF" );
+	foreach( $csvArr as $line )
+		fputcsv( $fh, $line );
+	fclose( $fh );
+    ?>
     
 
     <h3>Standard Deviations</h3>
@@ -189,11 +207,9 @@ try {
 	// require_once 'lib/templates/qq.php';
 	?>
 
-    <h3>Scatterplot Matrix of Per Capita Income &amp; Pass Percentage</h3-->
+    <!--h3>Scatterplot Matrix of Per Capita Income &amp; Pass Percentage</h3-->
 	<?php
-/*	foreach( $)
-	$handle = fopen( "lib/js/income.json", 'w+' );
-	f*/
+	// require_once 'lib/templates/splom.php';
 	?>
 
 	<?php
