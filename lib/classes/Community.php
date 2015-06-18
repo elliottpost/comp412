@@ -43,6 +43,7 @@ final class Community {
 
 	/**
 	 * constructs the inspection processor
+	 * @param int $id: the community ID
 	 */ 
 	public function __construct( $id ) {
 		$this->_id = $id;
