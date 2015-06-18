@@ -48,6 +48,10 @@ Fields Used: {Community ID, Postal Code}
 The original plan was to use Google Maps & KML data to use reverse geocoding on the lat/long to lookup neighborhood. The code for this was developed (see commit #457afb6); however, Google Maps limited to 5 requests per second or 2,500 requests per day. With ~ 45,000 records this was not feasible. Instead, I have taken the approach of using "Community IDs" from the census and mapping these to zip codes, instead of lat/long. The new approach is not quite as perfect as lat/long, but still has high accuracy. Other map sources such as Open Layers were considered but none had the API to support the functionality required.
 
 
+## Running unit tests
+To run the unit tests on your system, you will need to be able to run PHP Unit. Visit <http://phpunit.de> for instructions on setup. Once configured, navigate to the project directory/phpunit and then run "./vendor/bin/phpunit". You may specificy additional flags for additional details. You will also need to edit the file phpunit/lib/elly/ProjectAutoload.php to adjust the PROJECT_ROOT. Lastly, you can view PHP Unit Testing summaries under "phpunit/results".
+
+
 ## Conclusion
 Graphically or manually inspecting data shows there is no correlation between Per Capita Income and 
 pass rate of food inspections at local restaraunts. Although, again, the data had some issues due to 

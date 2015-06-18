@@ -10,6 +10,9 @@ class ProjectAutoload {
 		if( !defined( "PROJECT_PATH" ) )
 			define( "PROJECT_PATH", "/var/www/html/ellytronic/public_html/luc/comp412-hw2/" );
 
+		if( !defined( "LOCAL" ) )
+			define( "LOCAL", FALSE ); //force working remotely for testing
+
 		require_once PROJECT_PATH . 'lib/classes/FileParser.php';
 		require_once PROJECT_PATH . 'lib/classes/DataProcessor.php';
 		require_once PROJECT_PATH . 'lib/classes/Community.php';
