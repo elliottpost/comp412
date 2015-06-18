@@ -32,15 +32,26 @@ class CommunityTest extends \PHPUnit_Framework_TestCase {
 
 
 	/**
-	 * @depends testAccountConstruct
+	 * @depends testCommunityConstruct
 	 * ensures the ID was set and returned correctly
 	 */
 	public function testGetId() {
+		//rebuild the community
+		$this->testCommunityConstruct();
 		$this->assertTrue( $this->obj->getId() == 5 );
 		$this->assertFalse( !$this->obj->getId() );
 	}
 
-
+	/**
+	 * @depends testCommunityConstruct
+	 * ensures name can be set and get
+	 */
+	public function testGetName() {
+		//rebuild the community
+		$this->testCommunityConstruct();
+		$this->obj->setName( "Loyola" );
+		$this->assertEquals( "Loyola", $this->obj->getName() );
+	}
 
 
 	protected function tearDown() {
