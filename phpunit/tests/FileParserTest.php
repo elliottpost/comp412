@@ -13,14 +13,6 @@ class FileParserTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @expected Exception
-	 * expects an Exception to be thrown since method is private
-	 */
-	public function testConstruct_Illegal() {
-		$this->obj = new FileParser;
-	}
-
-	/**
 	 * ensures CSV files are read into assoc arrays correctly
 	 */
 	public function testReadCsvToAssocArray() {
